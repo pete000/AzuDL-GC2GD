@@ -1,6 +1,10 @@
 # AzuDl - GC2GD
 
 <p align="center">
+  <strong>فارسی</strong> · <a href="README.md">English</a>
+</p>
+
+<p align="center">
   <strong>Azizi Universal Downloader - Google Colab to Google Drive</strong>
 </p>
 
