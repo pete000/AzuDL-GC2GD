@@ -2,7 +2,7 @@
 
 **Azizi Universal Downloader - Google Colab to Google Drive**
 
-AzuDl - GC2GD is a Google Colab based universal downloader that downloads supported files directly to Google Drive. It supports direct links, YouTube videos and playlists, torrent magnet links, `.torrent` files, private torrent mode, batch downloads, download history, file management tools, ZIP creation, SHA256 hashing, aria2 status monitoring, duplicate torrent detection, live seeding status, and resumable downloads using aria2 session persistence.
+AzuDl - GC2GD is a Google Colab based universal downloader that downloads supported files directly to Google Drive. It supports direct links, YouTube videos and playlists, torrent magnet links, `.torrent` files, private torrent mode, batch downloads, download history, file management tools, ZIP creation, SHA256 hashing, aria2 status monitoring, duplicate torrent detection, live seeding status, resumable downloads using aria2 session persistence, and a Colab GUI beta interface.
 
 > فارسی: [README.fa.md](README.fa.md)
 
@@ -11,13 +11,15 @@ AzuDl - GC2GD is a Google Colab based universal downloader that downloads suppor
 ## Version
 
 ```text
-Version: 1.2.8
+Version: 1.3.0 GUI Beta
 ```
 
 ---
 
 ## Features
 
+- Colab GUI beta interface
+- Tab-based dashboard
 - Direct link download to Google Drive
 - YouTube video download
 - YouTube playlist download
@@ -69,6 +71,127 @@ InfoHash is already registered
 
 ---
 
+## <img src="https://img.shields.io/badge/v1.3.0-GUI%20Beta-5865F2?style=for-the-badge" alt="v1.3.0 GUI Beta">
+
+> [!IMPORTANT]
+> `v1.3.0 GUI Beta` introduces the first Colab graphical interface for **AzuDl - GC2GD**.  
+> The classic CLI is still available, but the default experience is now the GUI.
+
+<details>
+<summary><strong>What is new in v1.3.0 GUI Beta?</strong></summary>
+
+<br>
+
+Version `1.3.0 GUI Beta` adds a new Google Colab widget-based graphical interface for AzuDl - GC2GD.
+
+This beta release keeps the original CLI workflow available, but adds a tab-based GUI for users who prefer buttons, forms, dropdowns, checkboxes, and visual controls instead of typing menu numbers.
+
+The GUI is designed to make AzuDl easier to use for public GitHub users, especially new users who want to download direct links, YouTube videos, torrents, batch links, manage files, check storage, and access help tools from one interface.
+
+</details>
+
+<details>
+<summary><strong>GUI Highlights</strong></summary>
+
+<br>
+
+| Area | Added in GUI Beta |
+|---|---|
+| Interface | Colab widget-based graphical interface |
+| Navigation | Tab-based layout |
+| Dashboard | Quick access to status, storage, history, and files |
+| Auto Download | Auto-detect direct, YouTube, magnet, and torrent links |
+| Direct | Custom file name, folder, headers, and speed limit |
+| YouTube | Quality selection, audio-only mode, playlist mode, metadata |
+| Torrent | Magnet, `.torrent`, private mode, seeding, aria2 status |
+| Batch | Multiple links, one per line |
+| Files | List files, latest file, SHA256 tools |
+| Archives | ZIP folder and ZIP latest folder |
+| Maintenance | Save session, clear stopped tasks, remove GID |
+| Developer | Project and developer links |
+| Guide | Help, cookie help, and PO Token help |
+
+</details>
+
+<details>
+<summary><strong>Default Interface</strong></summary>
+
+<br>
+
+Starting from `1.3.0 GUI Beta`, the default interface is the GUI.
+
+When the notebook cell is run normally, AzuDl launches the Colab GUI automatically:
+
+```python
+launch_gui()
+```
+
+The classic CLI is still available:
+
+```python
+main()
+```
+
+You can also force CLI mode before running the script:
+
+```python
+import os
+os.environ["AZUDL_INTERFACE"] = "cli"
+```
+
+</details>
+
+<details>
+<summary><strong>GUI Tabs</strong></summary>
+
+<br>
+
+```text
+Dashboard
+Auto
+Direct
+YouTube
+Torrent
+Batch
+Files
+Archives
+Maintenance
+Developer
+Guide
+```
+
+</details>
+
+<details>
+<summary><strong>Beta Notes</strong></summary>
+
+<br>
+
+This is a beta GUI release. The download engine is still based on the same AzuDl core features, including aria2, yt-dlp, Google Drive storage, history, ZIP tools, SHA256 tools, and aria2 session persistence.
+
+The GUI may receive visual improvements, layout changes, and usability updates in future versions.
+
+</details>
+
+<details>
+<summary><strong>Suggested Commit Message</strong></summary>
+
+<br>
+
+```text
+release: AzuDl GC2GD v1.3.0 GUI Beta
+```
+
+Alternative:
+
+```text
+feat(gui): add Colab widget interface beta
+```
+
+</details>
+
+---
+
 ## Main Menu
 
 ```text
@@ -88,6 +211,7 @@ InfoHash is already registered
 14. Developer
 15. Help
 16. Exit
+17. Launch Colab GUI
 ```
 
 ---
@@ -104,6 +228,40 @@ InfoHash is already registered
 7. Save aria2 session
 8. Back
 ```
+
+---
+
+## GUI Tabs
+
+The GUI beta provides the following tabs inside Google Colab:
+
+```text
+Dashboard
+Auto
+Direct
+YouTube
+Torrent
+Batch
+Files
+Archives
+Maintenance
+Developer
+Guide
+```
+
+| Tab | Purpose |
+|---|---|
+| Dashboard | Quick access to status, storage, history, and file tools |
+| Auto | Detect link type and download supported links |
+| Direct | Download direct HTTP, HTTPS, or FTP links |
+| YouTube | Download YouTube videos, playlists, audio, metadata, and thumbnails |
+| Torrent | Download magnets, `.torrent` files, private torrents, and manage seeding |
+| Batch | Download multiple links one by one |
+| Files | List downloads, view latest file, and calculate SHA256 |
+| Archives | Create ZIP archives |
+| Maintenance | Save aria2 session, remove GID, clear stopped tasks, and check storage |
+| Developer | Show project and developer links |
+| Guide | Show help, cookie help, and PO Token help |
 
 ---
 
@@ -132,7 +290,7 @@ AzuDl-GC2GD/
 | `DirectDownloads` | Direct URL downloads |
 | `BatchDownloads` | Batch download outputs |
 | `Archives` | ZIP files created by AzuDl |
-| `Logs` | History, aria2 session file, and debug files |
+| `Logs` | History, aria2 session file, cookies templates, token templates, and debug files |
 
 ---
 
@@ -230,12 +388,13 @@ AzuDl uses `yt-dlp` to download YouTube videos and playlists.
 Supported options:
 
 - Best quality
-- Quality limit
+- Quality selection
 - Audio-only MP3
 - Playlist download
-- Custom format ID
 - Metadata saving
 - Thumbnail saving
+- Cookie file support
+- PO Token support
 
 Available quality values:
 
@@ -248,6 +407,72 @@ best
 720
 480
 360
+240
+144
+```
+
+---
+
+## YouTube Cookies
+
+Some YouTube downloads may fail in Colab with authentication, age restriction, or bot-check messages.
+
+Recommended fix:
+
+Use a Netscape-format `cookies.txt` file exported from your own logged-in browser session.
+
+Accepted cookie paths:
+
+```text
+/content/cookies.txt
+/content/youtube_cookies.txt
+/content/drive/MyDrive/AzuDl-GC2GD/Logs/youtube_cookies.txt
+/content/drive/MyDrive/AzuDl-GC2GD/youtube_cookies.txt
+/content/drive/MyDrive/AzuDl-GC2GD/cookies.txt
+```
+
+Environment variable alternative:
+
+```text
+AZUDL_YOUTUBE_COOKIES=/path/to/cookies.txt
+```
+
+Cookie safety:
+
+```text
+Never publish, share, or commit real cookies to GitHub.
+```
+
+---
+
+## YouTube PO Token
+
+PO Token means Proof Of Origin Token. It is an advanced `yt-dlp` option for YouTube clients and should be used only when anonymous access and `cookies.txt` both fail.
+
+AzuDl reads PO Token values from:
+
+```text
+/content/drive/MyDrive/AzuDl-GC2GD/Logs/youtube_po_token.txt
+```
+
+Recommended token line format:
+
+```text
+mweb+YOUR_PO_TOKEN
+```
+
+Optional Visitor Data path:
+
+```text
+/content/drive/MyDrive/AzuDl-GC2GD/Logs/youtube_visitor_data.txt
+```
+
+Environment variables also work:
+
+```text
+AZUDL_YOUTUBE_PO_TOKEN
+AZUDL_YOUTUBE_VISITOR_DATA
+AZUDL_YOUTUBE_PLAYER_CLIENT
 ```
 
 ---
@@ -284,13 +509,7 @@ best
 
 ## MP3 Audio Extraction
 
-Choose:
-
-```text
-Audio only? y
-```
-
-AzuDl extracts audio as:
+Choose audio-only mode to extract audio as:
 
 ```text
 MP3 320kbps
@@ -529,7 +748,7 @@ AzuDl installs required packages inside Colab:
 
 ```bash
 apt install -y aria2 ffmpeg p7zip-full
-pip install tqdm requests yt-dlp
+pip install tqdm requests yt-dlp ipywidgets
 ```
 
 | Tool | Purpose |
@@ -539,6 +758,7 @@ pip install tqdm requests yt-dlp
 | yt-dlp | YouTube download engine |
 | tqdm | Progress bars |
 | requests | HTTP requests |
+| ipywidgets | Colab GUI interface |
 | p7zip-full | Archive support |
 
 ---
@@ -550,7 +770,7 @@ pip install tqdm requests yt-dlp
 3. Paste the full AzuDl code into a cell.
 4. Run the cell.
 5. Authorize Google Drive mount.
-6. Choose an option from the menu.
+6. Use the GUI or choose an option from the CLI menu.
 
 ---
 
@@ -588,6 +808,26 @@ Auto detect link
 
 ---
 
+## GitHub Safety
+
+Never commit real credentials, cookies, tokens, session files, or private account data.
+
+Recommended `.gitignore` entries:
+
+```gitignore
+cookies.txt
+youtube_cookies.txt
+youtube_po_token.txt
+youtube_visitor_data.txt
+*_cookies.txt
+*.cookies
+*.token
+aria2_rpc_secret.txt
+aria2.session
+```
+
+---
+
 ## Legal Notice
 
 Use AzuDl only for content that you have the right to download, store, or distribute. The developer is not responsible for misuse of this project. AzuDl is a downloader tool. Responsibility for the downloaded content belongs to the user.
@@ -603,6 +843,7 @@ Use AzuDl only for content that you have the right to download, store, or distri
 - Some YouTube videos may require cookies or may not be available in Colab.
 - Private tracker seeding should be done on a VPS or seedbox for reliable long-term ratio.
 - Google Drive write speed may vary.
+- The GUI is currently beta and may receive layout or visual changes.
 
 ---
 
@@ -627,7 +868,7 @@ Links:
 ## Repository Description
 
 ```text
-AzuDl - GC2GD is a Google Colab based universal downloader for downloading direct links, YouTube videos, playlists, magnet links, torrent files, and private torrents directly to Google Drive with aria2 resume support, live progress, seeding status, batch downloads, history, ZIP tools, and SHA256 utilities.
+AzuDl - GC2GD is a Google Colab based universal downloader for downloading direct links, YouTube videos, playlists, magnet links, torrent files, and private torrents directly to Google Drive with a Colab GUI beta, aria2 resume support, live progress, seeding status, batch downloads, history, ZIP tools, and SHA256 utilities.
 ```
 
 ---
@@ -635,18 +876,31 @@ AzuDl - GC2GD is a Google Colab based universal downloader for downloading direc
 ## Suggested Commit Message
 
 ```text
-fix(torrent): detect duplicate infohash and resume existing aria2 task
+release: AzuDl GC2GD v1.3.0 GUI Beta
 ```
 
 Alternative:
 
 ```text
-release: AzuDl GC2GD v1.2.8
+feat(gui): add Colab widget interface beta
 ```
 
 ---
 
 ## Changelog
+
+### v1.3.0 GUI Beta
+
+- Added Colab widget-based GUI beta
+- Added tab-based dashboard
+- Added GUI tabs for Auto, Direct, YouTube, Torrent, Batch, Files, Archives, Maintenance, Developer, and Guide
+- Added Google Drive storage cards and usage bar in the GUI
+- Added GUI output console
+- Added GUI buttons for common actions
+- Added GUI access to cookie help and PO Token help
+- Kept classic CLI available
+- Set GUI as the default interface
+- Improved public GitHub usability for new users
 
 ### v1.2.8
 
